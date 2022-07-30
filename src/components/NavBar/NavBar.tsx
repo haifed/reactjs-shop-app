@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import { BrowserRouter as Router, Route, Link, NavLink } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link, NavLink, useNavigate } from "react-router-dom";
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import "./NavBar.css"
-import SideBar from "../SideNav/SideBar";
-// import SideBar from "../side-bar/side-nav";
-
+import SideBar from "../SideBar/SideBar";
+import Auth from "../../api/Auth.service";
+import  Login  from "../Login/Login";
 
 const NavBar = () => {
   const [show, setShow] = useState(false);
@@ -14,6 +14,8 @@ const NavBar = () => {
   const handleClose = () => setShow(false);
 
   const handleShow = () => setShow(true);
+
+  const navigate = useNavigate();
 
   return (
     <div>
@@ -23,7 +25,7 @@ const NavBar = () => {
       >
         <div className="d-flex justify-content-between">
           <Link to="/home" className="nav-link">
-            <h3>Navbar</h3>
+            <h3>Fur-Shop</h3>
           </Link>
 
           <button
@@ -69,7 +71,7 @@ const NavBar = () => {
           </div>
         </div>
 
-        <div className="search">
+        <div className="search me-3">
           <form
             className="input-group"
             action="https://www.google.com/search"
@@ -87,21 +89,19 @@ const NavBar = () => {
             </button>
           </form>
         </div>
+
+        {Auth.getCurrentUser()? <div>
+          <button className="btn btn-danger" onClick={Auth.logout}>Logout</button>
+        </div>:<div>
+          <button className="btn btn-primary" onClick={()=> {navigate('login')}}>Login</button>
+        </div>}
       </nav>
 
-      {/* side-nav */}
+      {/* side-bar */}
       <Offcanvas show={show} onHide={handleClose}  responsive="lg">
-        {/* <Offcanvas.Header closeButton>
-          <Offcanvas.Title>SideNav</Offcanvas.Title>
-        </Offcanvas.Header>
-        <Offcanvas.Body>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-        </Offcanvas.Body> */}
         <SideBar/>
       </Offcanvas>
     </div>
-
-
   );
 };
 

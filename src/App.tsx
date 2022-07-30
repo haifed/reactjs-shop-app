@@ -6,6 +6,8 @@ import Layout from "./components/Layout/Layout";
 import Home from "./components/Home/Home";
 import Products from "./components/Products/Products";
 import About from "./components/About/About";
+import Login from "./components/Login/Login";
+import ProductDetails from "./components/ProductDetails/ProductDetails";
 
 function App() {
   return (
@@ -33,7 +35,10 @@ function App() {
           <Route index element={<Home />} />
           <Route path="/home" element={<Home />} />
           <Route path="/products" element={<Products />} />
+          <Route path="/products/:id" element={<ProductDetails />} />
           <Route path="/about" element={<About />} />
+          <Route path="/login" element={<Login/>} />
+
           {/* <Route path="/to-do-list" element={<ToDoContainer />} />
           <Route path="/users" element={<Users />} />
           <Route path="/users/:id" element={<UserDetail />} />
