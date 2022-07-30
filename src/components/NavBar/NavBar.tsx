@@ -71,7 +71,7 @@ const NavBar = () => {
           </div>
         </div>
 
-        <div className="search me-3">
+        <div className="search me-3 d-none d-sm-block">
           <form
             className="input-group"
             action="https://www.google.com/search"

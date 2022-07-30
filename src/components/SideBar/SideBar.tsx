@@ -17,6 +17,25 @@ const SideBar = () => {
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
         tempor incididunt ut labore et dolore magna aliqua.
         <hr />
+        <div className="d-block d-sm-none">
+          <form
+            className="input-group"
+            action="https://www.google.com/search"
+            method="GET"
+          // style={{width:'200px'}}
+          >
+            <input
+              className="form-control"
+              id="fname"
+              name="q"
+              placeholder="Search by Google ..."
+            />
+            <button type="submit" className="btn btn-light">
+              Search
+            </button>
+          </form>
+        </div>
+        <hr />
         <ListGroup className="mb-3 border-0">
           <ListGroup.Item className="border-0">
             <Link to="/home" className="nav-link link-name">
