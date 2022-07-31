@@ -16,7 +16,7 @@ const SideBar = () => {
       <Offcanvas.Body>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
         tempor incididunt ut labore et dolore magna aliqua.
-        <hr />
+       
         <div className="d-block d-sm-none">
           <form
             className="input-group"

@@ -1,4 +1,5 @@
 import { Outlet, Link } from "react-router-dom";
+import Loader from "../../shared/Loader/Loader";
 import NavBar from "../NavBar/NavBar";
 
 const Layout = () => {
@@ -7,6 +8,8 @@ const Layout = () => {
       <div><NavBar/></div>
 
       <Outlet />
+
+      <Loader/>
     </>
   )
 };

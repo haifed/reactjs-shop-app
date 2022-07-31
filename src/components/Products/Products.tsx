@@ -8,9 +8,16 @@ import { useNavigate } from "react-router-dom";
 import Pagination from "../../shared/Pagination/Pagination";
 import Search from "../../shared/Search/Search";
 import Sort from "../../shared/Sort/Sort";
+import Form from "react-bootstrap/Form";
+import ListGroup from "react-bootstrap/ListGroup";
 
 const Products = () => {
   const [products, setProducts] = useState([]);
+  const [listProducts, setListProducts] = useState([]);
+  const [companies, setCompanies] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [maxPrice, setMaxPrice] = useState(0);
+  const [currentPrice, setCurrentPrice] = useState(0);
   const [error, setError] = useState("");
   const [loading, setloading] = useState(true);
   const navigate = useNavigate();
@@ -20,7 +27,10 @@ const Products = () => {
   const [recordsPerPage] = useState(10);
   const indexOfLastRecord = currentPage * recordsPerPage;
   const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
-  const currentRecords = products.slice(indexOfFirstRecord, indexOfLastRecord);
+  const currentRecords: any = products.slice(
+    indexOfFirstRecord,
+    indexOfLastRecord
+  );
   const nPages = Math.ceil(products.length / recordsPerPage);
 
   const getAllProducts = async () => {
@@ -35,7 +45,16 @@ const Products = () => {
     ProductsService.getAllProducts()
       .then((res: any) => {
         setProducts(res.data);
+        setListProducts(res.data);
         console.log(res.data);
+        let listCompanies: any = res.data.map((item: any) => item.company);
+        listCompanies = unique(listCompanies);
+        setCompanies(listCompanies);
+        let listCategories: any = res.data.map((item: any) => item.category);
+        listCategories = unique(listCategories);
+        listCategories.unshift("all");
+        setCategories(listCategories);
+        setMaxPrice(findMax(res.data));
       })
       .catch((err) => {
         setError(err);
@@ -47,7 +66,7 @@ const Products = () => {
 
   // search
   const SearchProduct = (textInput: any) => {
-    let copy = [...products];
+    let copy = [...listProducts];
     if (textInput !== "") {
       let text = textInput.trim().toLowerCase();
       let filter = copy.filter((p: any) => p.name.toLowerCase().includes(text));
@@ -56,7 +75,7 @@ const Products = () => {
       setProducts(copy);
     }
   };
-  const Refresh = (textInput: any) => {
+  const Refresh = () => {
     getAllProducts();
   };
 
@@ -101,8 +120,62 @@ const Products = () => {
     }
   };
 
+  // filter
+  const filterByCompany = (e: any) => {
+    let copy = [...listProducts];
+    if (e.currentTarget.value !== "all") {
+      let filterProducts: any = copy.filter(
+        (p: any) => p.company === e.currentTarget.value
+      );
+      setProducts(filterProducts);
+    }
+    if (e.currentTarget.value === "all") {
+      setProducts(copy);
+    }
+  };
+  const filterByCategory = (e: any) => {
+    console.log(e.currentTarget.id);
+    let copy = [...listProducts];
+    if (e.currentTarget.id !== "all") {
+      let filterProducts: any = copy.filter(
+        (p: any) => p.category === e.currentTarget.id
+      );
+      setProducts(filterProducts);
+    } else setProducts(copy);
+  };
+  const filterByPrice = (e: any) => {
+    console.log(e.currentTarget.value);
+    setCurrentPrice(e.currentTarget.value);
+    let copy = [...listProducts];
+    let filterProducts: any = copy.filter(
+      (p: any) => p.price <= e.currentTarget.value
+    );
+    setProducts(filterProducts);
+  };
+
   const truncate = (str: string) => {
     return str.length > 50 ? str.substring(0, 50) + "..." : str;
+  };
+  const unique = (arr: any) => {
+    var newArr = [];
+    for (var i = 0; i < arr.length; i++) {
+      if (newArr.findIndex((item) => arr[i] == item) === -1) {
+        newArr.push(arr[i]);
+      }
+    }
+    return newArr;
+  };
+  const findMax = (arr: any) => {
+    let i;
+    // Initialize maximum element
+    let max = arr[0].price;
+    // Traverse array elements
+    // from second and compare
+    // every element with current max
+    for (i = 1; i < arr.length; i++) {
+      if (arr[i].price > max) max = arr[i].price;
+    }
+    return max;
   };
 
   useEffect(() => {
@@ -121,6 +194,55 @@ const Products = () => {
         <div className="col-3 p-3">
           <div className="d-none d-lg-block">
             <Search searchItem={SearchProduct} refresh={Refresh} />
+          </div>
+          <hr />
+          <div className="mb-3">
+            <div className="h6">Company:</div>
+            <Form.Select
+              aria-label="Default select example"
+              onChange={filterByCompany}
+            >
+              <option>Choose company ...</option>
+              <option value="all">All</option>
+              {companies.map((company: any) => {
+                return (
+                  <option id={company} key={company + company} value={company}>
+                    {company}
+                  </option>
+                );
+              })}
+            </Form.Select>
+          </div>
+
+          <div className="mb-3">
+            <div className="h6">Category:</div>
+            <ListGroup>
+              {categories.map((category: any) => {
+                return (
+                  <ListGroup.Item
+                    className="category border-0"
+                    id={category}
+                    key={category + category}
+                    onClick={filterByCategory}
+                  >
+                    {category}
+                  </ListGroup.Item>
+                );
+              })}
+            </ListGroup>
+          </div>
+
+          <div className="d-flex align-items-center w-100">
+            <label className="me-2 h6">Price:</label>
+            <input
+              type="range"
+              className="custom-range col-8 me-1"
+              min="0"
+              max={maxPrice}
+              onChange={filterByPrice}
+              id="priceInputId"
+            />
+            <span>{currentPrice/100} $</span>
           </div>
         </div>
 
@@ -145,7 +267,9 @@ const Products = () => {
                       <Card.Img variant="top" src={product.image} />
                       <Card.Body>
                         <Card.Title>{product.name.toUpperCase()}</Card.Title>
-                        <Card.Text>{product.price / 100} $</Card.Text>
+                        <Card.Text>Price: {product.price / 100} $</Card.Text>
+                        <Card.Text>Company: {product.company}</Card.Text>
+                        <Card.Text>Category: {product.category}</Card.Text>
                         <Card.Text>{truncate(product.description)}</Card.Text>
                         <Button
                           variant="primary"
@@ -154,7 +278,9 @@ const Products = () => {
                         >
                           Go Details ...
                         </Button>
-                        <Button className="m-1" variant="success">Add To Cart ...</Button>
+                        <Button className="m-1" variant="success">
+                          Add To Cart ...
+                        </Button>
                       </Card.Body>
                     </Card>
                   </div>
