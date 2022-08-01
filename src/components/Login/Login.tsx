@@ -40,9 +40,9 @@ function Login() {
           <Form.Label>Password</Form.Label>
           <Form.Control value={password} onInput={(e)=>{setPassword(e.currentTarget.value)}} type="password" placeholder="Password" />
         </Form.Group>
-        <Form.Group className="mb-3" controlId="formBasicCheckbox">
+        {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
           <Form.Check type="checkbox" label="Check me out" />
-        </Form.Group>
+        </Form.Group> */}
 
         <Button variant="primary" type="submit" onClick={login}>
           Submit

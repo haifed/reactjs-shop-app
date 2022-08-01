@@ -1,4 +1,30 @@
 .carousel-img{
-    height: calc(100vh - 60px) !important;
-    object-fit: contain;
+    height: calc(100vh)!important;
+    object-fit: cover;
 }
+.jumbotron-container{
+    height: calc(100vh - 60px) !important;
+    background-image: url(../../assets/home1.jpg);
+    background-size: 100% 100%;
+    background-position: bottom;
+    object-fit: cover;
+    font-weight: bold;
+}
+.carousel-container{
+    height: calc(100vh) !important;
+}
+
+@media only screen and (max-width: 768px) {
+    .carousel-container{
+        height: calc((100vh - 60px)/3) !important;
+    }
+    .carousel-img{
+        height: calc((100vh - 60px)/3) !important;
+        object-fit: cover;
+    }
+    .jumbotron-container{
+        height: calc((100vh - 60px)*2/3) !important;
+        background-image: url(../../assets/home3.jpg);
+        color: white;
+    }
+  }

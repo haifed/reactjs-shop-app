@@ -12,6 +12,7 @@ import Form from "react-bootstrap/Form";
 import ListGroup from "react-bootstrap/ListGroup";
 
 const Products = () => {
+  
   const [products, setProducts] = useState([]);
   const [listProducts, setListProducts] = useState([]);
   const [companies, setCompanies] = useState([]);
@@ -186,12 +187,12 @@ const Products = () => {
   // render
   return (
     <div>
-      <div className="d-block d-lg-none px-4 pt-3">
+      <div className="d-block d-lg-none p-2">
         <Search searchItem={SearchProduct} refresh={Refresh} />
       </div>
 
       <div className="d-flex col-12">
-        <div className="col-3 p-3">
+        <div className="col-3 p-2">
           <div className="d-none d-lg-block">
             <Search searchItem={SearchProduct} refresh={Refresh} />
           </div>
@@ -232,21 +233,27 @@ const Products = () => {
             </ListGroup>
           </div>
 
-          <div className="d-flex align-items-center w-100">
-            <label className="me-2 h6">Price:</label>
-            <input
+          <div className="d-flex flex-wrap align-items-center w-100">
+            <div className="col-12 col-sm-2">
+               <label className="me-2 h6">Price:</label>
+            </div>
+           
+            <div className="col-12 col-sm-8">
+               <input
               type="range"
-              className="custom-range col-8 me-1"
+              className="w-100 custom-range me-1"
               min="0"
               max={maxPrice}
               onChange={filterByPrice}
               id="priceInputId"
             />
             <span>{currentPrice/100} $</span>
+            </div>
+           
           </div>
         </div>
 
-        <div className="col-9 p-3">
+        <div className="col-9 p-2 right">
           <div className="px-2 d-flex justify-content-between align-items-center">
             <div>{products?.length} Products</div>
             <div className="col-6 col-md-3">
