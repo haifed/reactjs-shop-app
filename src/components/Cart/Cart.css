@@ -2,3 +2,7 @@
     width: auto;
     height: 100px;
 }
+.noproduct{
+    width: 100vw;
+    height: calc(100vh - 75px);
+}

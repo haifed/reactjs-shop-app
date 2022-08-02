@@ -39,42 +39,49 @@ const Cart = () => {
     }, []);
 
     return (
+
         <div>
-            <ListGroup>
-                {
-                    productStore.map((product: any) => {
-                        return (
-                            <ListGroup.Item id={product.id} key={product.id}>
-                                <div className="d-flex align-items-center col-12">
-                                    <div className="col-2">
-                                        <img className="image-cart" src={product.image} alt="" />
-                                    </div>
+            {
+                productStore.length > 0 ? <div>
+                    <div>
+                        <ListGroup>
+                            {
+                                productStore.map((product: any) => {
+                                    return (
+                                        <ListGroup.Item id={product.id} key={product.id}>
+                                            <div className="d-flex align-items-center col-12">
+                                                <div className="col-2">
+                                                    <img className="image-cart" src={product.image} alt="" />
+                                                </div>
 
-                                    <div className="d-flex align-items-center col-10">
-                                        <div className="col-4">
-                                            <p>{product.name}</p>
-                                            <p>{product.price / 1000} $</p>
-                                        </div>
+                                                <div className="d-flex align-items-center col-10">
+                                                    <div className="col-4">
+                                                        <p>{product.name}</p>
+                                                        <p>{product.price / 1000} $</p>
+                                                    </div>
 
-                                        <div className="col-4">
-                                            <p>{product.quantity} product(s) in cart</p>
-                                        </div>
+                                                    <div className="col-4">
+                                                        <p>{product.quantity} product(s) in cart</p>
+                                                    </div>
 
-                                        <div>
-                                            <button className="btn btn-success me-2" onClick={() => incQuantity(product)}>Increase</button>
-                                            <button className="btn btn-light me-2" onClick={() => decQuantity(product)}>Decrease</button>
-                                            <button className="btn btn-danger" onClick={() => removeFromCart(product)}>Remove</button>
-                                        </div>
+                                                    <div>
+                                                        <button className="btn btn-success me-2" onClick={() => incQuantity(product)}>Increase</button>
+                                                        <button className="btn btn-light me-2" onClick={() => decQuantity(product)}>Decrease</button>
+                                                        <button className="btn btn-danger" onClick={() => removeFromCart(product)}>Remove</button>
+                                                    </div>
 
-                                    </div>
+                                                </div>
 
 
-                                </div>
-                            </ListGroup.Item>
-                        )
-                    })
-                }
-            </ListGroup>
+                                            </div>
+                                        </ListGroup.Item>
+                                    )
+                                })
+                            }
+                        </ListGroup>
+                    </div>
+                </div> : <div className="noproduct d-flex justify-content-center align-items-center"><h3>There is no product in cart.</h3></div>
+            }
         </div>
     )
 };
