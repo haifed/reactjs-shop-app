@@ -1,3 +1,23 @@
+.quantity {
+  position: relative;
+  font-size: 16px;
+  top: -8px;
+  left: -8px;
+  font-weight: bold;
+  color: black;
+  width: 25px;
+  height: 25px;
+  background-color: orange;
+  border-radius: 50%;
+  display: inline-block;
+  padding-bottom: 2px;
+}
+
+.cart-total-price {
+  display: block;
+  font-size: 12px;
+}
+
 @media only screen and (max-width: 600px) {
     .search {
       width: 50vw;

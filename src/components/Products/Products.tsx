@@ -10,9 +10,9 @@ import Search from "../../shared/Search/Search";
 import Sort from "../../shared/Sort/Sort";
 import Form from "react-bootstrap/Form";
 import ListGroup from "react-bootstrap/ListGroup";
+import CartService from "../../api/Cart.service";
 
 const Products = () => {
-  
   const [products, setProducts] = useState([]);
   const [listProducts, setListProducts] = useState([]);
   const [companies, setCompanies] = useState([]);
@@ -179,9 +179,29 @@ const Products = () => {
     return max;
   };
 
+  function addToCart(product: any) {
+    // console.log(product);
+    CartService.addToCart(product);
+    // product.ItemQuantity = CartService.getItemQuantity(product);
+    // console.log(product.name,':', product.ItemQuantity);
+    CartService.getProductStore().subscribe((res:any)=>{
+      console.log(res);
+      let index = res.findIndex((p:any)=>p.id === product.id);
+      console.log(index);
+      product.ItemQuantity = res[index].quantity;
+      console.log(product.name,':', product.ItemQuantity);
+      setProducts([...products])
+    })
+  }
+  function removeFromCart(product: any) {
+    console.log(product);
+    CartService.removeItem(product);
+    product.ItemQuantity = CartService.getItemQuantity(product);
+    console.log(product.name,':', product.ItemQuantity);
+  }
+
   useEffect(() => {
     getAllProducts();
-    console.log("Products", products);
   }, []);
 
   // render
@@ -235,27 +255,26 @@ const Products = () => {
 
           <div className="d-flex flex-wrap align-items-center w-100">
             <div className="col-12 col-sm-2">
-               <label className="me-2 h6">Price:</label>
+              <label className="me-2 h6">Price:</label>
             </div>
-           
+
             <div className="col-12 col-sm-8">
-               <input
-              type="range"
-              className="w-100 custom-range me-1"
-              min="0"
-              max={maxPrice}
-              onChange={filterByPrice}
-              id="priceInputId"
-            />
-            <span>{currentPrice/100} $</span>
+              <input
+                type="range"
+                className="w-100 custom-range me-1"
+                min="0"
+                max={maxPrice}
+                onChange={filterByPrice}
+                id="priceInputId"
+              />
+              <span>{currentPrice / 100} $</span>
             </div>
-           
           </div>
         </div>
 
         <div className="col-9 p-2 right">
           <div className="px-2 d-flex justify-content-between align-items-center">
-            <div>{products?.length} Products</div>
+            <div className="fw-bold">{products?.length} Products</div>
             <div className="col-6 col-md-3">
               <Sort sort={SortBy} />
             </div>
@@ -285,10 +304,27 @@ const Products = () => {
                         >
                           Go Details ...
                         </Button>
-                        <Button className="m-1" variant="success">
+                        <Button
+                          className="m-1"
+                          variant="success"
+                          onClick={() => addToCart(product)}
+                        >
                           Add To Cart ...
                         </Button>
+
+                        {product.ItemQuantity>0? <Button
+                          className="m-1"
+                          variant="danger"
+                          onClick={() => removeFromCart(product)}
+                        >
+                          Remove
+                        </Button>:null}
+                       
+                        <br />
+                        {product.ItemQuantity>0?<span>{ product.ItemQuantity} product(s) in cart</span>:null}
+                        
                       </Card.Body>
+                      
                     </Card>
                   </div>
                 </div>

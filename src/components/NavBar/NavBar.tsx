@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Route, Link, NavLink, useNavigate } from "react-router-dom";
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -7,15 +7,36 @@ import "./NavBar.css"
 import SideBar from "../SideBar/SideBar";
 import Auth from "../../api/Auth.service";
 import  Login  from "../Login/Login";
+import CartService from "../../api/Cart.service";
 
 const NavBar = () => {
   const [show, setShow] = useState(false);
+  const [quantity, setQuantity] = useState(0);
+  const [totalPrice, setTotalPrice] = useState(0);
 
   const handleClose = () => setShow(false);
 
   const handleShow = () => setShow(true);
 
   const navigate = useNavigate();
+
+  const getQuantityCart = () =>{
+    CartService.getCartQuantity().subscribe((res:any)=>{
+      // console.log(res);
+      setQuantity(res);
+    });
+  }
+  const getTotalPrice = () =>{
+    CartService.getTotalPrice().subscribe((res:any)=>{
+      // console.log(res);
+      setTotalPrice(res);
+    });
+  }
+
+  useEffect(()=>{
+getQuantityCart();
+getTotalPrice();
+  },[])
 
   return (
     <div>
@@ -88,6 +109,12 @@ const NavBar = () => {
               Search
             </button>
           </form>
+        </div>
+
+        <div className="me-2">
+          <button className="btn btn-light"><i className="fas fa-shopping-cart"></i></button>
+          <span className="quantity text-center"> {quantity} </span>
+        <span className="cart-total-price  text-start">{ totalPrice/100} $</span>
         </div>
 
         {Auth.getCurrentUser()? <div>
