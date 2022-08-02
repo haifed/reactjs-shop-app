@@ -8,6 +8,7 @@ import Products from "./components/Products/Products";
 import About from "./components/About/About";
 import Login from "./components/Login/Login";
 import ProductDetails from "./components/ProductDetails/ProductDetails";
+import Cart from "./components/Cart/Cart";
 
 function App() {
   return (
@@ -36,8 +37,9 @@ function App() {
           <Route path="/home" element={<Home />} />
           <Route path="/products" element={<Products />} />
           <Route path="/products/:id" element={<ProductDetails />} />
+          <Route path="/cart" element={<Cart />} />
           <Route path="/about" element={<About />} />
-          <Route path="/login" element={<Login/>} />
+          <Route path="/login" element={<Login />} />
 
           {/* <Route path="/to-do-list" element={<ToDoContainer />} />
           <Route path="/users" element={<Users />} />

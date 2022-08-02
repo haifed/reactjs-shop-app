@@ -45,9 +45,14 @@ const Products = () => {
     // }
     ProductsService.getAllProducts()
       .then((res: any) => {
+        // setProducts(res.data);
+        // setListProducts(res.data);
+        res.data.forEach((product: any) => {
+          getItemQuantity(product);
+        });
         setProducts(res.data);
         setListProducts(res.data);
-        console.log(res.data);
+        // console.log(res.data);
         let listCompanies: any = res.data.map((item: any) => item.company);
         listCompanies = unique(listCompanies);
         setCompanies(listCompanies);
@@ -182,22 +187,38 @@ const Products = () => {
   function addToCart(product: any) {
     // console.log(product);
     CartService.addToCart(product);
+
     // product.ItemQuantity = CartService.getItemQuantity(product);
     // console.log(product.name,':', product.ItemQuantity);
-    CartService.getProductStore().subscribe((res:any)=>{
+    // setProducts([...products])
+
+    // CartService.getProductStore().subscribe((res:any)=>{
+    //   console.log(res);
+    //   let index = res.findIndex((p:any)=>p.id === product.id);
+    //   console.log(index);
+    //   product.ItemQuantity = res[index].quantity;
+    //   console.log(product.name,':', product.ItemQuantity);
+    //   setProducts([...products])
+    // })
+    getItemQuantity(product);
+  }
+  function getItemQuantity(product: any) {
+    CartService.getProductStore().subscribe((res: any) => {
       console.log(res);
-      let index = res.findIndex((p:any)=>p.id === product.id);
+      let index = res.findIndex((p: any) => p.id === product.id);
       console.log(index);
-      product.ItemQuantity = res[index].quantity;
-      console.log(product.name,':', product.ItemQuantity);
-      setProducts([...products])
+      product.ItemQuantity = res[index]?.quantity;
+      console.log(product.name, ':', product.ItemQuantity);
+      setProducts([...products]);
+      setListProducts([...products]);
     })
   }
   function removeFromCart(product: any) {
-    console.log(product);
+    // console.log(product);
     CartService.removeItem(product);
-    product.ItemQuantity = CartService.getItemQuantity(product);
-    console.log(product.name,':', product.ItemQuantity);
+    // product.ItemQuantity = CartService.getItemQuantity(product);
+    // console.log(product.name,':', product.ItemQuantity);
+    getItemQuantity(product);
   }
 
   useEffect(() => {
@@ -312,19 +333,19 @@ const Products = () => {
                           Add To Cart ...
                         </Button>
 
-                        {product.ItemQuantity>0? <Button
+                        {product.ItemQuantity > 0 ? <Button
                           className="m-1"
                           variant="danger"
                           onClick={() => removeFromCart(product)}
                         >
                           Remove
-                        </Button>:null}
-                       
+                        </Button> : null}
+
                         <br />
-                        {product.ItemQuantity>0?<span>{ product.ItemQuantity} product(s) in cart</span>:null}
-                        
+                        {product.ItemQuantity > 0 ? <span>{product.ItemQuantity} product(s) in cart</span> : null}
+
                       </Card.Body>
-                      
+
                     </Card>
                   </div>
                 </div>

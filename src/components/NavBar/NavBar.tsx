@@ -123,7 +123,9 @@ const NavBar = () => {
 
         <div className="d-flex align-items-center justify-content-center">
           <div className="me-2">
-            <button className="btn btn-light">
+            <button className="btn btn-light" onClick={() => {
+                  navigate("cart");
+                }}>
               <i className="fas fa-shopping-cart"></i>
             </button>
             <span className="quantity text-center"> {quantity} </span>
