@@ -1,0 +1,14 @@
+.about1{
+    width: calc(100vw);
+    height: calc(100vh - 80px);
+    background-image: url(../../assets/about1.jpg);
+    background-size: 100% 100%;
+}
+@media only screen and (max-width: 600px) {
+    .about1{
+        width: calc(100vw);
+        height: auto;
+        background-image: url(../../assets/about1.jpg);
+        background-size: 100% 100%;
+    }
+  }
