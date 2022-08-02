@@ -1,12 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { BrowserRouter as Router, Route, Link, NavLink, useNavigate } from "react-router-dom";
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
-import Offcanvas from 'react-bootstrap/Offcanvas';
-import "./NavBar.css"
+import {
+  BrowserRouter as Router,
+  Route,
+  Link,
+  NavLink,
+  useNavigate,
+} from "react-router-dom";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
+import Offcanvas from "react-bootstrap/Offcanvas";
+import "./NavBar.css";
 import SideBar from "../SideBar/SideBar";
 import Auth from "../../api/Auth.service";
-import  Login  from "../Login/Login";
+import Login from "../Login/Login";
 import CartService from "../../api/Cart.service";
 
 const NavBar = () => {
@@ -20,23 +26,23 @@ const NavBar = () => {
 
   const navigate = useNavigate();
 
-  const getQuantityCart = () =>{
-    CartService.getCartQuantity().subscribe((res:any)=>{
+  const getQuantityCart = () => {
+    CartService.getCartQuantity().subscribe((res: any) => {
       // console.log(res);
       setQuantity(res);
     });
-  }
-  const getTotalPrice = () =>{
-    CartService.getTotalPrice().subscribe((res:any)=>{
+  };
+  const getTotalPrice = () => {
+    CartService.getTotalPrice().subscribe((res: any) => {
       // console.log(res);
       setTotalPrice(res);
     });
-  }
+  };
 
-  useEffect(()=>{
-getQuantityCart();
-getTotalPrice();
-  },[])
+  useEffect(() => {
+    getQuantityCart();
+    getTotalPrice();
+  }, []);
 
   return (
     <div>
@@ -49,9 +55,7 @@ getTotalPrice();
             <h3>Fur-Shop</h3>
           </Link>
 
-          <button
-            className="btn btn-light  mx-2" onClick={handleShow}
-          >
+          <button className="btn btn-light  mx-2" onClick={handleShow}>
             <span className="navbar-toggler-icon"></span>
           </button>
         </div>
@@ -63,13 +67,19 @@ getTotalPrice();
           <div className="d-flex justify-content-between align-items-center">
             <ul className="navbar-nav mr-auto ">
               <li className="nav-item active">
-                <Link to="/home" className="nav-link">Home</Link>
+                <Link to="/home" className="nav-link">
+                  Home
+                </Link>
               </li>
               <li className="nav-item active">
-                <Link to="/products" className="nav-link">Products</Link>
+                <Link to="/products" className="nav-link">
+                  Products
+                </Link>
               </li>
               <li className="nav-item active">
-                <Link to="/about" className="nav-link">About</Link>
+                <Link to="/about" className="nav-link">
+                  About
+                </Link>
               </li>
               {/* <li className="nav-item">
                 <Link to="/to-do-list" className="nav-link">To do list</Link>
@@ -97,7 +107,7 @@ getTotalPrice();
             className="input-group"
             action="https://www.google.com/search"
             method="GET"
-          // style={{width:'200px'}}
+            // style={{width:'200px'}}
           >
             <input
               className="form-control"
@@ -111,22 +121,41 @@ getTotalPrice();
           </form>
         </div>
 
-        <div className="me-2">
-          <button className="btn btn-light"><i className="fas fa-shopping-cart"></i></button>
-          <span className="quantity text-center"> {quantity} </span>
-        <span className="cart-total-price  text-start">{ totalPrice/100} $</span>
-        </div>
+        <div className="d-flex align-items-center justify-content-center">
+          <div className="me-2">
+            <button className="btn btn-light">
+              <i className="fas fa-shopping-cart"></i>
+            </button>
+            <span className="quantity text-center"> {quantity} </span>
+            <span className="cart-total-price  text-start">
+              {totalPrice / 100} $
+            </span>
+          </div>
 
-        {Auth.getCurrentUser()? <div>
-          <button className="btn btn-danger" onClick={Auth.logout}>Logout</button>
-        </div>:<div>
-          <button className="btn btn-primary" onClick={()=> {navigate('login')}}>Login</button>
-        </div>}
+          {Auth.getCurrentUser() ? (
+            <div>
+              <button className="btn btn-danger" onClick={Auth.logout}>
+                Logout
+              </button>
+            </div>
+          ) : (
+            <div>
+              <button
+                className="btn btn-primary"
+                onClick={() => {
+                  navigate("login");
+                }}
+              >
+                Login
+              </button>
+            </div>
+          )}
+        </div>
       </nav>
 
       {/* side-bar */}
-      <Offcanvas show={show} onHide={handleClose}  responsive="lg">
-        <SideBar/>
+      <Offcanvas show={show} onHide={handleClose} responsive="lg">
+        <SideBar />
       </Offcanvas>
     </div>
   );
