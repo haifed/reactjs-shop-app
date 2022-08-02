@@ -23,14 +23,15 @@ const Cart = () => {
         setProductStore(products);
     };
     function incQuantity(product: any) {
-        // console.log(product);
-        let index = productStore.findIndex((i: any) => i.id === product.id);
-
+        CartService.addToCart(product);
+        setProductStore([...productStore]);
     };
     function decQuantity(product: any) {
-        // console.log(product);
-        let index = productStore.findIndex((i: any) => i.id === product.id);
-
+        CartService.removeItem(product);
+        setProductStore([...productStore]);
+        if (product.quantity === 0) {
+            removeFromCart(product)
+        }
     };
 
     useEffect(() => {
@@ -60,6 +61,8 @@ const Cart = () => {
                                         </div>
 
                                         <div>
+                                            <button className="btn btn-success me-2" onClick={() => incQuantity(product)}>Increase</button>
+                                            <button className="btn btn-light me-2" onClick={() => decQuantity(product)}>Decrease</button>
                                             <button className="btn btn-danger" onClick={() => removeFromCart(product)}>Remove</button>
                                         </div>
 
