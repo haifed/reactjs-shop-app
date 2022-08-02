@@ -42,7 +42,7 @@ const Cart = () => {
 
         <div>
             {
-                productStore.length > 0 ? <div>
+                productStore.length > 0 ? <div className="cart-container">
                     <div>
                         <ListGroup>
                             {

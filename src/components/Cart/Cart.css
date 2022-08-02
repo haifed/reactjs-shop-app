@@ -4,5 +4,9 @@
 }
 .noproduct{
     width: 100vw;
-    height: calc(100vh - 75px);
+    height: calc(100vh - 70px - 80px);
+}
+.cart-container{
+    width: 100vw;
+    height: calc(100vh - 70px - 80px);
 }

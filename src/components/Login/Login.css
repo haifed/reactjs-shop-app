@@ -1,6 +1,6 @@
 .login {
     width: 100vw;
-    height: calc(100vh - 60px);
+    height: calc(100vh - 60px - 86px);
     background-image: url(../../assets/login.jpg);
     object-fit: cover;
     background-repeat: no-repeat;
@@ -12,7 +12,7 @@
 @media only screen and (max-width: 768px) {
     .login {
         width: 100vw;
-        height: calc(100vh - 60px);
+        height: calc(100vh - 60px - 86px);
         background-image: url(../../assets/login2.jpg);
         object-fit: cover;
         background-repeat: no-repeat;
@@ -24,7 +24,7 @@
   @media only screen and (max-width: 600px) {
     .login {
         width: 100vw;
-        height: calc(100vh - 60px);
+        height: calc(100vh - 60px - 86px);
         background-image: url(../../assets/login1.jpg);
         object-fit: cover;
         background-repeat: no-repeat;
