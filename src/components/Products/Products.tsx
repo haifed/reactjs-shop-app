@@ -11,17 +11,42 @@ import Sort from "../../shared/Sort/Sort";
 import Form from "react-bootstrap/Form";
 import ListGroup from "react-bootstrap/ListGroup";
 import CartService from "../../api/Cart.service";
+import { findMax, truncate, unique, uppercaseLetter } from "../../shared/GlobalFunctions/GlobalFunctions";
 
 const Products = () => {
+  let colors: any[] = [
+    {
+      color: "#ff0000",
+      value: "#ff0000",
+    },
+    {
+      color: "#00ff00",
+      value: "#00ff00",
+    },
+    {
+      color: "#0000ff",
+      value: "#0000ff",
+    },
+    {
+      color: "#000",
+      value: "#000",
+    },
+    {
+      color: "#ffb900",
+      value: "#ffb900",
+    },
+  ];
   const [products, setProducts] = useState([]);
   const [listProducts, setListProducts] = useState([]);
   const [companies, setCompanies] = useState([]);
   const [categories, setCategories] = useState([]);
   const [maxPrice, setMaxPrice] = useState(0);
   const [currentPrice, setCurrentPrice] = useState(0);
+  const [color, setColor] = useState(colors);
   const [error, setError] = useState("");
   const [loading, setloading] = useState(true);
   const navigate = useNavigate();
+
 
   // pagination
   const [currentPage, setCurrentPage] = useState(1);
@@ -52,7 +77,7 @@ const Products = () => {
         });
         setProducts(res.data);
         setListProducts(res.data);
-        // console.log(res.data);
+        console.log(res.data);
         let listCompanies: any = res.data.map((item: any) => item.company);
         listCompanies = unique(listCompanies);
         setCompanies(listCompanies);
@@ -60,7 +85,7 @@ const Products = () => {
         listCategories = unique(listCategories);
         listCategories.unshift("all");
         setCategories(listCategories);
-        setMaxPrice(findMax(res.data));
+        setMaxPrice(findMax(res.data, "price"));
       })
       .catch((err) => {
         setError(err);
@@ -150,7 +175,7 @@ const Products = () => {
     } else setProducts(copy);
   };
   const filterByPrice = (e: any) => {
-    console.log(e.currentTarget.value);
+    // console.log(e.currentTarget.value);
     setCurrentPrice(e.currentTarget.value);
     let copy = [...listProducts];
     let filterProducts: any = copy.filter(
@@ -158,30 +183,16 @@ const Products = () => {
     );
     setProducts(filterProducts);
   };
+  const filterByColor = (e: any) => {
+    // console.log(e.currentTarget.id);
+    let copy = [...listProducts];
+    if (e.currentTarget.id != "all") {
+      let filterProducts: any = copy.filter((p: any) =>
+        p.colors.includes(e.currentTarget.id)
+      );
+      setProducts(filterProducts);
+    } else setProducts(copy);
 
-  const truncate = (str: string) => {
-    return str.length > 50 ? str.substring(0, 50) + "..." : str;
-  };
-  const unique = (arr: any) => {
-    var newArr = [];
-    for (var i = 0; i < arr.length; i++) {
-      if (newArr.findIndex((item) => arr[i] == item) === -1) {
-        newArr.push(arr[i]);
-      }
-    }
-    return newArr;
-  };
-  const findMax = (arr: any) => {
-    let i;
-    // Initialize maximum element
-    let max = arr[0].price;
-    // Traverse array elements
-    // from second and compare
-    // every element with current max
-    for (i = 1; i < arr.length; i++) {
-      if (arr[i].price > max) max = arr[i].price;
-    }
-    return max;
   };
 
   function addToCart(product: any) {
@@ -204,11 +215,11 @@ const Products = () => {
   }
   function getItemQuantity(product: any) {
     CartService.getProductStore().subscribe((res: any) => {
-      console.log(res);
+      // console.log(res);
       let index = res.findIndex((p: any) => p.id === product.id);
-      console.log(index);
+      // console.log(index);
       product.ItemQuantity = res[index]?.quantity;
-      console.log(product.name, ':', product.ItemQuantity);
+      // console.log(product.name, ':', product.ItemQuantity);
       setProducts([...products]);
       setListProducts([...products]);
     })
@@ -227,7 +238,7 @@ const Products = () => {
 
   // render
   return (
-    <div>
+    <div className="products-container">
       <div className="d-block d-lg-none p-2">
         <Search searchItem={SearchProduct} refresh={Refresh} />
       </div>
@@ -238,7 +249,7 @@ const Products = () => {
             <Search searchItem={SearchProduct} refresh={Refresh} />
           </div>
           <hr />
-          <div className="mb-3">
+          <div className="mb-5">
             <div className="h6">Company:</div>
             <Form.Select
               aria-label="Default select example"
@@ -249,14 +260,14 @@ const Products = () => {
               {companies.map((company: any) => {
                 return (
                   <option id={company} key={company + company} value={company}>
-                    {company}
+                    {uppercaseLetter(company, "first")}
                   </option>
                 );
               })}
             </Form.Select>
           </div>
 
-          <div className="mb-3">
+          <div className="mb-5">
             <div className="h6">Category:</div>
             <ListGroup>
               {categories.map((category: any) => {
@@ -267,11 +278,29 @@ const Products = () => {
                     key={category + category}
                     onClick={filterByCategory}
                   >
-                    {category}
+                    {uppercaseLetter(category, "first")}
                   </ListGroup.Item>
                 );
               })}
             </ListGroup>
+          </div>
+
+          <div className="mb-5">
+            <div className="h6">Color:</div>
+            <div className="d-flex align-items-center">
+              <span id={'all'} className="me-2" style={{ cursor: 'pointer' }} onClick={filterByColor}>All</span>
+              {
+                color.map((col: any) => {
+                  return (
+                    <button id={col.value} key={col.value}
+                      className="colors-group-item color-item border-0 py-1 mx-1"
+                      style={{ backgroundColor: `${col.value}`, cursor: 'pointer' }}
+                      onClick={filterByColor}
+                    ></button>
+                  )
+                })
+              }
+            </div>
           </div>
 
           <div className="d-flex flex-wrap align-items-center w-100">
@@ -315,8 +344,8 @@ const Products = () => {
                       <Card.Body>
                         <Card.Title>{product.name.toUpperCase()}</Card.Title>
                         <Card.Text>Price: {product.price / 100} $</Card.Text>
-                        <Card.Text>Company: {product.company}</Card.Text>
-                        <Card.Text>Category: {product.category}</Card.Text>
+                        <Card.Text>Company: {uppercaseLetter(product.company, "first")}</Card.Text>
+                        <Card.Text>Category: {uppercaseLetter(product.category, "first")}</Card.Text>
                         <Card.Text>{truncate(product.description)}</Card.Text>
                         <Button
                           variant="primary"
@@ -353,11 +382,14 @@ const Products = () => {
             })}
           </div>
 
-          <Pagination
-            nPages={nPages}
-            currentPage={currentPage}
-            setCurrentPage={setCurrentPage}
-          />
+          <div className="mt-2">
+            <Pagination
+              nPages={nPages}
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+            />
+          </div>
+
         </div>
       </div>
     </div>
