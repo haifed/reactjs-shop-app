@@ -63,8 +63,8 @@ const ProductDetails = () => {
               <div>({(product as any).stars})</div>
             </div>
             <p className="p-0 mt-0 mb-3">Reviews: {(product as any).reviews}</p>
-            <p>{(product as any).description}</p>
-            <p>Price: {(product as any).price / 100} $</p>
+            <p><i className="fas fa-info-circle"></i> {(product as any).description}</p>
+            <p>Price: $ {(product as any).price / 100}</p>
             <p>Stock: {(product as any).stock} </p>
             <p>Shipping: {(product as any).shipping ? 'yes' : 'no'} </p>
           </div>

@@ -130,7 +130,7 @@ const NavBar = () => {
             </button>
             <span className="quantity text-center"> {quantity} </span>
             <span className="cart-total-price  text-start">
-              {totalPrice / 100} $
+              $ {totalPrice / 100}
             </span>
           </div>
 

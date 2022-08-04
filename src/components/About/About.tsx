@@ -33,6 +33,55 @@ const About = () => {
         </div>
       </div>
 
+      <div className="px-2 py-5 message">
+        <div id="contact">
+          <div className="container ">
+
+            <div className="row mb-5">
+              <div className="col-lg-12 text-center">
+                <h2 className="text-white">Get in Touch</h2>
+              </div>
+            </div>
+
+            <div className="row">
+              <div className="col-lg-12">
+                <form name="sentMessage" id="contactForm" >
+                  <div className="row">
+                    <div className="col-md-6">
+                      <div className="form-group mb-4">
+                        <input type="text" className="form-control" required placeholder="Your Name *" id="name" />
+
+                      </div>
+
+                      <div className="form-group  mb-4">
+                        <input type="email" className="form-control" required placeholder="Your Email *" id="email" />
+
+                      </div>
+
+                      <div className="form-group  mb-4">
+                        <input type="tel" className="form-control" required placeholder="Your Phone *" id="phone" />
+
+                      </div>
+                    </div>
+
+                    <div className="col-md-6">
+                      <div className="form-group">
+                        <textarea className="form-control py-2 px-3" required placeholder="Your Message *" rows={6} id="message" ></textarea>
+
+                      </div>
+                    </div>
+
+                    <div className="col-lg-12 text-center mt-3">
+                      <button type="submit" className="btn btn-info">Send Message</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   );
 };

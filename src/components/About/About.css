@@ -4,6 +4,11 @@
     background-image: url(../../assets/about1.jpg);
     background-size: 100% 100%;
 }
+.message{
+    background-image: url(../../assets/p1.jpg);
+    background-size: 100% 100%;
+    background-repeat: repeat;
+}
 @media only screen and (max-width: 600px) {
     .about1{
         width: calc(100vw);

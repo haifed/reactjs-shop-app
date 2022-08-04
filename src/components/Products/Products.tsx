@@ -11,7 +11,12 @@ import Sort from "../../shared/Sort/Sort";
 import Form from "react-bootstrap/Form";
 import ListGroup from "react-bootstrap/ListGroup";
 import CartService from "../../api/Cart.service";
-import { findMax, truncate, unique, uppercaseLetter } from "../../shared/GlobalFunctions/GlobalFunctions";
+import {
+  findMax,
+  truncate,
+  unique,
+  uppercaseLetter,
+} from "../../shared/GlobalFunctions/GlobalFunctions";
 
 const Products = () => {
   let colors: any[] = [
@@ -46,7 +51,6 @@ const Products = () => {
   const [error, setError] = useState("");
   const [loading, setloading] = useState(true);
   const navigate = useNavigate();
-
 
   // pagination
   const [currentPage, setCurrentPage] = useState(1);
@@ -192,7 +196,6 @@ const Products = () => {
       );
       setProducts(filterProducts);
     } else setProducts(copy);
-
   };
 
   function addToCart(product: any) {
@@ -222,7 +225,7 @@ const Products = () => {
       // console.log(product.name, ':', product.ItemQuantity);
       setProducts([...products]);
       setListProducts([...products]);
-    })
+    });
   }
   function removeFromCart(product: any) {
     // console.log(product);
@@ -244,7 +247,7 @@ const Products = () => {
       </div>
 
       <div className="d-flex col-12">
-        <div className="col-4 col-md-3 p-2">
+        <div className="col-4 col-md-3 col-lg-2 p-2">
           <div className="d-none d-lg-block">
             <Search searchItem={SearchProduct} refresh={Refresh} />
           </div>
@@ -288,18 +291,28 @@ const Products = () => {
           <div className="mb-5">
             <div className="h6">Color:</div>
             <div className="d-flex align-items-center align-items-center flex-wrap">
-              <span id={'all'} className="me-2" style={{ cursor: 'pointer' }} onClick={filterByColor}>All</span>
-              {
-                color.map((col: any) => {
-                  return (
-                    <button id={col.value} key={col.value}
-                      className="colors-group-item color-item border-0  m-1"
-                      style={{ backgroundColor: `${col.value}`, cursor: 'pointer' }}
-                      onClick={filterByColor}
-                    ></button>
-                  )
-                })
-              }
+              <span
+                id={"all"}
+                className="me-2"
+                style={{ cursor: "pointer" }}
+                onClick={filterByColor}
+              >
+                All
+              </span>
+              {color.map((col: any) => {
+                return (
+                  <button
+                    id={col.value}
+                    key={col.value}
+                    className="colors-group-item color-item border-0  m-1"
+                    style={{
+                      backgroundColor: `${col.value}`,
+                      cursor: "pointer",
+                    }}
+                    onClick={filterByColor}
+                  ></button>
+                );
+              })}
             </div>
           </div>
 
@@ -322,7 +335,7 @@ const Products = () => {
           </div>
         </div>
 
-        <div className="col-8 col-md-9 p-2 right">
+        <div className="col-8 col-md-9 col-lg-10 p-2 right">
           <div className="px-2 d-flex justify-content-between align-items-center">
             <div className="fw-bold">{products?.length} Products</div>
             <div className="col-6 col-md-3">
@@ -343,9 +356,13 @@ const Products = () => {
                       <Card.Img variant="top" src={product.image} />
                       <Card.Body>
                         <Card.Title>{product.name.toUpperCase()}</Card.Title>
-                        <Card.Text>Price: {product.price / 100} $</Card.Text>
-                        <Card.Text>Company: {uppercaseLetter(product.company, "first")}</Card.Text>
-                        <Card.Text>Category: {uppercaseLetter(product.category, "first")}</Card.Text>
+                        <Card.Text>Price: $ {product.price / 100} </Card.Text>
+                        <Card.Text>
+                          Company: {uppercaseLetter(product.company, "first")}
+                        </Card.Text>
+                        <Card.Text>
+                          Category: {uppercaseLetter(product.category, "first")}
+                        </Card.Text>
                         <Card.Text>{truncate(product.description)}</Card.Text>
                         <Button
                           variant="primary"
@@ -362,19 +379,21 @@ const Products = () => {
                           Add To Cart ...
                         </Button>
 
-                        {product.ItemQuantity > 0 ? <Button
-                          className="m-1"
-                          variant="danger"
-                          onClick={() => removeFromCart(product)}
-                        >
-                          Remove
-                        </Button> : null}
+                        {product.ItemQuantity > 0 ? (
+                          <Button
+                            className="m-1"
+                            variant="danger"
+                            onClick={() => removeFromCart(product)}
+                          >
+                            Remove
+                          </Button>
+                        ) : null}
 
                         <br />
-                        {product.ItemQuantity > 0 ? <span>{product.ItemQuantity} product(s) in cart</span> : null}
-
+                        {product.ItemQuantity > 0 ? (
+                          <span>{product.ItemQuantity} product(s) in cart</span>
+                        ) : null}
                       </Card.Body>
-
                     </Card>
                   </div>
                 </div>
@@ -389,7 +408,6 @@ const Products = () => {
               setCurrentPage={setCurrentPage}
             />
           </div>
-
         </div>
       </div>
     </div>
