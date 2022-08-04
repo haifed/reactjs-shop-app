@@ -9,11 +9,19 @@
     background-size: 100% 100%;
     background-repeat: repeat;
 }
+.map{
+    width: 100vw;
+    height: 50vh;
+}
 @media only screen and (max-width: 600px) {
     .about1{
         width: calc(100vw);
         height: auto;
         background-image: url(../../assets/about1.jpg);
         background-size: 100% 100%;
+    }
+    .map{
+        width: 100vw;
+        height: 30vh;
     }
   }
