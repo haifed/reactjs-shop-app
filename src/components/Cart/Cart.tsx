@@ -8,6 +8,9 @@ import "./Cart.css";
 const Cart = () => {
 
     const [productStore, setProductStore] = useState([]);
+    const [quantity, setQuantity] = useState(0);
+    const [totalPrice, setTotalPrice] = useState(0);
+    const navigate = useNavigate();
 
     const getProductStore = () => {
         CartService.getProductStore().subscribe((res: any) => {
@@ -34,8 +37,23 @@ const Cart = () => {
         }
     };
 
+    const getQuantityCart = () => {
+        CartService.getCartQuantity().subscribe((res: any) => {
+            // console.log(res);
+            setQuantity(res);
+        });
+    };
+    const getTotalPrice = () => {
+        CartService.getTotalPrice().subscribe((res: any) => {
+            // console.log(res);
+            setTotalPrice(res);
+        });
+    };
+
     useEffect(() => {
         getProductStore();
+        getQuantityCart();
+        getTotalPrice();
     }, []);
 
     return (
@@ -44,6 +62,23 @@ const Cart = () => {
             {
                 productStore.length > 0 ? <div className="cart-container">
                     <div>
+                        <div className="d-flex justify-content-end align-items-center pe-3">
+                            <div className="py-2 px-3">
+                                <div> <span className="h6"><i className="fas fa-shopping-cart"></i> Total Products:</span>  {quantity}</div>
+                                <div> <span className="h6"><i className="fas fa-dollar-sign"></i> Total Price:</span>  {totalPrice / 100} $</div>
+                            </div>
+                            <div>
+                                <a
+                                    className="btn btn-primary btn-sm"
+                                    href="#"
+                                    role="button"
+                                    onClick={() => navigate("/products")}
+                                >
+                                    <i className="fas fa-shopping-bag"></i> Continue shopping
+                                </a>
+                            </div>
+                        </div>
+
                         <ListGroup>
                             {
                                 productStore.map((product: any) => {
@@ -51,11 +86,13 @@ const Cart = () => {
                                         <ListGroup.Item id={product.id} key={product.id}>
                                             <div className="d-flex align-items-center justify-content-center col-12">
                                                 <div className="d-flex flex-wrap col-5">
-                                                    <img className="image-cart col-12 col-sm-6" src={product.image} alt="" />
+                                                    <div className=" col-12 col-sm-6">
+                                                        <img className="image-cart" src={product.image} alt="" />
+                                                    </div>
 
                                                     <div className="col-12 col-sm-6 d-flex align-items-center justify-content-center text-center">
                                                         <div>
-                                                            <div>{product.name}</div>
+                                                            <div>{product.name.toUpperCase()}</div>
                                                             <div>{product.price / 1000} $</div>
                                                         </div>
                                                     </div>
@@ -64,7 +101,7 @@ const Cart = () => {
                                                 <div className="d-flex align-items-center justify-content-center col-7">
 
                                                     <div className="col-6 p-2">
-                                                        <p>{product.quantity} product(s) in cart</p>
+                                                        <p className="text-center">{product.quantity} product(s) in cart</p>
                                                         <div className="text-center">
                                                             <button className="btn btn-success me-2 mb-1" onClick={() => incQuantity(product)}><i className="fas fa-arrow-up"></i></button>
                                                             <button className="btn btn-warning mb-1" onClick={() => decQuantity(product)}><i className="fas fa-arrow-down"></i></button>
@@ -72,7 +109,7 @@ const Cart = () => {
                                                     </div>
 
                                                     <div className="col-6 text-center">
-                                                        <button className="btn btn-danger" onClick={() => removeFromCart(product)}>Remove</button>
+                                                        <button className="btn btn-danger" onClick={() => removeFromCart(product)}><i className="fas fa-trash-alt"></i> Remove</button>
                                                     </div>
 
                                                 </div>

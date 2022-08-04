@@ -13,7 +13,6 @@ const CartService = {
 
   ProductStore:new BehaviorSubject([]),
 
-
    getCart() {
     let savedcart = localStorage.getItem("cart");
     if (savedcart) {
@@ -68,7 +67,7 @@ const CartService = {
   // },
 
   getCartQuantity() {
-    return  this.ProductQuantity.asObservable();
+    return this.ProductQuantity.asObservable();
   },
   // getCartQuantity() {
   //   return  (this.cart as any).reduce((acc:any, item:any) => acc + item.quantity, 0);

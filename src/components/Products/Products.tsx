@@ -244,7 +244,7 @@ const Products = () => {
       </div>
 
       <div className="d-flex col-12">
-        <div className="col-3 p-2">
+        <div className="col-4 col-md-3 p-2">
           <div className="d-none d-lg-block">
             <Search searchItem={SearchProduct} refresh={Refresh} />
           </div>
@@ -287,13 +287,13 @@ const Products = () => {
 
           <div className="mb-5">
             <div className="h6">Color:</div>
-            <div className="d-flex align-items-center">
+            <div className="d-flex align-items-center align-items-center flex-wrap">
               <span id={'all'} className="me-2" style={{ cursor: 'pointer' }} onClick={filterByColor}>All</span>
               {
                 color.map((col: any) => {
                   return (
                     <button id={col.value} key={col.value}
-                      className="colors-group-item color-item border-0 py-1 mx-1"
+                      className="colors-group-item color-item border-0  m-1"
                       style={{ backgroundColor: `${col.value}`, cursor: 'pointer' }}
                       onClick={filterByColor}
                     ></button>
@@ -304,7 +304,7 @@ const Products = () => {
           </div>
 
           <div className="d-flex flex-wrap align-items-center w-100">
-            <div className="col-12 col-sm-2">
+            <div className="col-12 col-sm-3">
               <label className="me-2 h6">Price:</label>
             </div>
 
@@ -322,7 +322,7 @@ const Products = () => {
           </div>
         </div>
 
-        <div className="col-9 p-2 right">
+        <div className="col-8 col-md-9 p-2 right">
           <div className="px-2 d-flex justify-content-between align-items-center">
             <div className="fw-bold">{products?.length} Products</div>
             <div className="col-6 col-md-3">
@@ -336,7 +336,7 @@ const Products = () => {
                 <div
                   id={product.id}
                   key={product.id + product.name}
-                  className="col-12 col-md-6 col-lg-4"
+                  className="col-12 col-md-4 col-lg-3"
                 >
                   <div className="p-2">
                     <Card id={product.id} className="card-product">

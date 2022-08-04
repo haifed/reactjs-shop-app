@@ -31,7 +31,7 @@ const Home = () => {
               role="button"
               onClick={() => navigate("/products")}
             >
-              Shop now ...
+              <i className="fas fa-shopping-bag"></i> Shop now ...
             </a>
           </div>
         </div>

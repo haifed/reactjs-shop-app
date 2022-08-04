@@ -107,7 +107,7 @@ const NavBar = () => {
             className="input-group"
             action="https://www.google.com/search"
             method="GET"
-            // style={{width:'200px'}}
+          // style={{width:'200px'}}
           >
             <input
               className="form-control"
@@ -116,7 +116,7 @@ const NavBar = () => {
               placeholder="Search ..."
             />
             <button type="submit" className="btn btn-light">
-              Search
+              <i className="fas fa-search"></i>
             </button>
           </form>
         </div>
@@ -124,8 +124,8 @@ const NavBar = () => {
         <div className="d-flex align-items-center justify-content-center">
           <div className="me-2">
             <button className="btn btn-light" onClick={() => {
-                  navigate("cart");
-                }}>
+              navigate("cart");
+            }}>
               <i className="fas fa-shopping-cart"></i>
             </button>
             <span className="quantity text-center"> {quantity} </span>
@@ -148,7 +148,7 @@ const NavBar = () => {
                   navigate("login");
                 }}
               >
-                Login
+                <i className="fas fa-sign-in-alt"></i> Login
               </button>
             </div>
           )}
