@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import ListGroup from "react-bootstrap/ListGroup";
 import { Link, useNavigate } from "react-router-dom";
@@ -7,6 +7,23 @@ import "./SideBar.css"
 
 const SideBar = () => {
   const navigate = useNavigate();
+  const [user, setUser] = useState('');
+
+  const getUser = () => {
+    Auth.getCurrentUser().subscribe((res: any) => {
+      console.log(res);
+      setUser(res);
+    });
+  };
+
+  const handleLogout = () => {
+    Auth.logout();
+    setUser('')
+  };
+
+  useEffect(() => {
+    getUser();
+  }, []);
 
   return (
     <div>
@@ -60,9 +77,9 @@ const SideBar = () => {
         </ListGroup>
 
         <div>
-          {Auth.getCurrentUser() ? (
+          {user !== '' ? (
             <div>
-              <button className="btn btn-danger" onClick={Auth.logout}>
+              <button className="btn btn-danger" onClick={handleLogout}>
                 <i className="fas fa-sign-out-alt"></i> Logout
               </button>
             </div>
