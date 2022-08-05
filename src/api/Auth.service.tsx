@@ -25,7 +25,7 @@ const Auth = {
   logout() {
     localStorage.removeItem("token");
     this.currentUser.next('');
-    toast("You've just logout!");
+    toast("You've just logged out!");
     // window.location.href = "/";
   },
   register(email: any, password: any) {

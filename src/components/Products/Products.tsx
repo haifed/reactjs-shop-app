@@ -54,7 +54,7 @@ const Products = () => {
 
   // pagination
   const [currentPage, setCurrentPage] = useState(1);
-  const [recordsPerPage] = useState(10);
+  const [recordsPerPage] = useState(12);
   const indexOfLastRecord = currentPage * recordsPerPage;
   const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
   const currentRecords: any = products.slice(

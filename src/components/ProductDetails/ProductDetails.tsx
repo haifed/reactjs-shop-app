@@ -24,8 +24,8 @@ const ProductDetails = () => {
 
   return (
     <div>
-      <div className="d-flex col-12">
-        <div className="col-6 p-3">
+      <div className="d-flex col-12 flex-wrap">
+        <div className="col-sm-6 p-3">
           <Carousel>
             {(product as any)?.images?.map((image: any) => {
               return (
@@ -47,7 +47,7 @@ const ProductDetails = () => {
           </Carousel>
         </div>
 
-        <div className="col-6 p-3">
+        <div className="col-sm-6 p-3">
           <div className="mb-5">
             <h3 className="mb-3">{(product as any).name?.toUpperCase()}</h3>
             <div className="d-flex align-items-center p-0 m-0">
