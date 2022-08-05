@@ -19,6 +19,7 @@ const NavBar = () => {
   const [show, setShow] = useState(false);
   const [quantity, setQuantity] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
+  const [user, setUser] = useState('');
 
   const handleClose = () => setShow(false);
 
@@ -38,10 +39,22 @@ const NavBar = () => {
       setTotalPrice(res);
     });
   };
+  const getUser = () => {
+    Auth.getCurrentUser().subscribe((res: any) => {
+      console.log(res);
+      setUser(res);
+    });
+  };
+
+  const handleLogout = () => {
+    Auth.logout();
+    setUser('')
+  };
 
   useEffect(() => {
     getQuantityCart();
     getTotalPrice();
+    getUser();
   }, []);
 
   return (
@@ -134,9 +147,9 @@ const NavBar = () => {
             </span>
           </div>
 
-          {Auth.getCurrentUser() ? (
+          {user !== '' ? (
             <div>
-              <button className="btn btn-danger" onClick={Auth.logout}>
+              <button className="btn btn-danger" onClick={handleLogout}>
                 Logout
               </button>
             </div>

@@ -2,14 +2,18 @@ import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import "../Login/Login.css";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 // import { history } from "../helpers/history";
 import Auth from "../../api/Auth.service";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
   const [email, setEmail] = useState("eve.holt@reqres.in");
   const [password, setPassword] = useState("cityslicka");
   const [isLoggedin, setIsLoggedin] = useState(false);
+  const navigate = useNavigate();
 
   // const user = {
   //   email: 'eve.holt@reqres.in',
@@ -21,8 +25,9 @@ function Login() {
       email: email,
       password: password
     };
-    Auth.login(user)
+    Auth.login(user);
     setIsLoggedin(true);
+    navigate('/')
   }
 
   return (
