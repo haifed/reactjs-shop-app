@@ -3,6 +3,7 @@ import ProductsService from "../../api/Products.service";
 import Carousel from "react-bootstrap/Carousel";
 import { useNavigate } from "react-router-dom";
 import { Rating } from "primereact/rating";
+import "./ProductDetails.css"
 
 const ProductDetails = () => {
   const [product, setProduct] = useState({});
@@ -23,15 +24,15 @@ const ProductDetails = () => {
   }, []);
 
   return (
-    <div>
-      <div className="d-flex col-12 flex-wrap">
-        <div className="col-sm-6 p-3">
+    <div className="">
+      <div className="d-flex col-12 flex-wrap detail">
+        <div className="col-xl-6 p-3">
           <Carousel>
             {(product as any)?.images?.map((image: any) => {
               return (
                 <Carousel.Item id={image.id} key={image.id + image.filename}>
                   <img
-                    className="d-block w-100"
+                    className="d-block w-100 image"
                     src={image.url}
                     alt="image slide"
                   />
@@ -47,8 +48,8 @@ const ProductDetails = () => {
           </Carousel>
         </div>
 
-        <div className="col-sm-6 p-3">
-          <div className="mb-5">
+        <div className="col-xl-6 p-3">
+          <div className="mb-3">
             <h3 className="mb-3">{(product as any).name?.toUpperCase()}</h3>
             <div className="d-flex align-items-center p-0 m-0">
               <div className="me-2">Star:</div>
@@ -64,7 +65,7 @@ const ProductDetails = () => {
             </div>
             <p className="p-0 mt-0 mb-3">Reviews: {(product as any).reviews}</p>
             <p><i className="fas fa-info-circle"></i> {(product as any).description}</p>
-            <p>Price: $ {(product as any).price / 100}</p>
+            <p style={{ color: 'gold', fontWeight: 'bold' }}>Price:  {((product as any).price / 100).toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</p>
             <p>Stock: {(product as any).stock} </p>
             <p>Shipping: {(product as any).shipping ? 'yes' : 'no'} </p>
           </div>

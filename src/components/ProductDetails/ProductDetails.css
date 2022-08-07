@@ -1,0 +1,17 @@
+.detail {
+  height: calc(100vh - 146px);
+  overflow-y: auto;
+}
+.image {
+  height: calc(100vh - 146px - 32px);
+  object-fit: cover;
+}
+
+@media only screen and (max-width: 1024px) {
+  .detail {
+    height: auto;
+  }
+  .image {
+    height: auto;
+  }
+}

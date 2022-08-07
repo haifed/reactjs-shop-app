@@ -356,7 +356,7 @@ const Products = () => {
                       <Card.Img variant="top" src={product.image} />
                       <Card.Body>
                         <Card.Title>{product.name.toUpperCase()}</Card.Title>
-                        <Card.Text>Price: $ {product.price / 100} </Card.Text>
+                        <Card.Text>Price: {(product.price / 100).toLocaleString('en-US', { style: 'currency', currency: 'USD' })} </Card.Text>
                         <Card.Text>
                           Company: {uppercaseLetter(product.company, "first")}
                         </Card.Text>
